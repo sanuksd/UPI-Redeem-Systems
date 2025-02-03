@@ -2,7 +2,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.util.*;
 
-@CrossOrigin(origins = "*") // Allow frontend to access API
+@CrossOrigin(origins = "*") // Allows frontend to access API
 @RestController
 @RequestMapping("/api")
 public class CouponController {
