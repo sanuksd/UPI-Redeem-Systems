@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Redemption</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Your Coupon Code</h2>
+        <input type="text" id="coupon" placeholder="Enter Coupon Code">
+        <button onclick="validateCoupon()">Validate</button>
+        
+        <div id="upi-section" style="display: none;">
+            <h2>Enter Your UPI Address</h2>
+            <input type="text" id="upi" placeholder="Enter UPI ID">
+            <button onclick="submitUPI()">Submit</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
