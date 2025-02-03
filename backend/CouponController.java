@@ -1,26 +1,32 @@
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
+import java.util.*;
+
+@CrossOrigin(origins = "*") // Allow frontend to access API
 @RestController
 @RequestMapping("/api")
 public class CouponController {
 
-    @Autowired
-    private CouponRepository couponRepository;
+    // List of valid coupon codes
+    private List<String> validCoupons = Arrays.asList(
+        "SAVE50", "DISCOUNT100", "UPI2025", "COUPON123",
+        "FREECASH", "OFFER75", "LUCKY500", "GIFT250",
+        "SPECIAL25", "CASHBACK99"
+    );
 
+    private Set<String> usedCoupons = new HashSet<>();
+
+    // Validate Coupon Code
     @GetMapping("/validate")
-    public ResponseEntity<?> validateCoupon(@RequestParam String code) {
-        Optional<Coupon> coupon = couponRepository.findByCode(code);
-        if (coupon.isPresent() && !coupon.get().isUsed()) {
-            coupon.get().setUsed(true);
-            couponRepository.save(coupon.get());
-            return ResponseEntity.ok(Collections.singletonMap("valid", true));
+    public ResponseEntity<Map<String, Boolean>> validateCoupon(@RequestParam String code) {
+        Map<String, Boolean> response = new HashMap<>();
+        
+        if (validCoupons.contains(code) && !usedCoupons.contains(code)) {
+            usedCoupons.add(code); // Mark as used
+            response.put("valid", true);
+        } else {
+            response.put("valid", false);
         }
-        return ResponseEntity.ok(Collections.singletonMap("valid", false));
-    }
-
-    @PostMapping("/store-upi")
-    public ResponseEntity<?> storeUPI(@RequestBody Map<String, String> request) {
-        String upi = request.get("upi");
-        UPIEntry entry = new UPIEntry(upi);
-        couponRepository.save(entry);
-        return ResponseEntity.ok(Collections.singletonMap("status", "UPI Saved"));
+        return ResponseEntity.ok(response);
     }
 }
