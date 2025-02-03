@@ -1,6 +1,6 @@
 function validateCoupon() {
     let coupon = document.getElementById("coupon").value;
-    fetch("http://localhost:8080/api/validate?code=" + coupon)
+    fetch("https://upi-redeem-systems-production.up.railway.app" + coupon)
         .then(response => response.json())
         .then(data => {
             if (data.valid) {
